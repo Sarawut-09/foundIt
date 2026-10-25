@@ -1,0 +1,27 @@
+DirectoryIndex index.php index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # ลิงก์หน้าแรกเวอร์ชันเก่าชี้มาที่ index.html ให้ส่งผ่าน PHP entry point
+  RewriteRule ^index\.html$ index.php [L]
+
+  # เผลอเข้า /foundit หรือมีโฟลเดอร์ซ้อน
+  RewriteRule ^foundit/(.*)$ /$1 [R=301,L]
+  RewriteRule ^foundit/?$ / [R=301,L]
+
+  # ให้ URL หน้าแรกใช้ index.php ซึ่งส่งเนื้อหาจาก index.html โดยตรง
+  RewriteRule ^index/?$ / [R=302,L]
+  RewriteRule ^home/?$ / [R=302,L]
+
+  # รองรับ URL ที่ไม่มี .html
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.+)$ $1.html [L]
+</IfModule>
+
+# ใช้ PHP entry point เพื่อให้หน้าแรกทำงานได้แม้ index.html ไม่ได้ถูกเลือกเป็น DirectoryIndex
+ErrorDocument 404 /index.php
+ErrorDocument 403 /index.php
