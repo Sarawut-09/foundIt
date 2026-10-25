@@ -72,18 +72,10 @@ if ($method === 'GET') {
     $where = [];
     $params = [];
 
-<<<<<<< HEAD
     // กรองประกาศที่ครบกำหนดออกไว้ด้วย เผื่อการลบจริงไม่สำเร็จในคำขอก่อนหน้า
     $includeExpired = !empty($_GET['include_expired']) || (!empty($_GET['for_reports']) && $isAdmin);
     if (!$includeExpired) {
         $where[] = '(i.status != "returned" OR i.returned_at IS NULL OR i.returned_at > DATE_SUB(NOW(), INTERVAL 3 DAY))';
-=======
-    // ประกาศที่สถานะเป็น returned (คืนของแล้ว) เกิน 30 วัน จะถูกซ่อนอัตโนมัติจากหน้าเว็บ
-    // ยกเว้นในหน้าแอดมินหรือเมื่อมีการร้องขอ include_expired=1
-    $includeExpired = !empty($_GET['include_expired']) || (!empty($_GET['for_reports']) && $isAdmin);
-    if (!$includeExpired) {
-        $where[] = '(i.status != "returned" OR i.returned_at IS NULL OR i.returned_at >= DATE_SUB(NOW(), INTERVAL 30 DAY))';
->>>>>>> ff5e1d54e952f716ffbd022cb01df04a9049c844
     }
 
     // ตัวกรองประกาศของฉัน
@@ -206,12 +198,8 @@ if ($action === 'update' || $method === 'PUT') {
             $params[] = $input[$f];
             if ($f === 'status') {
                 if ($input[$f] === 'returned') {
-<<<<<<< HEAD
                     // อย่าเริ่มนับ 3 วันใหม่เมื่อแก้ฟิลด์อื่นของโพสต์ที่คืนของแล้ว
                     $sets[] = "`returned_at` = CASE WHEN `status` = 'returned' THEN COALESCE(`returned_at`, NOW()) ELSE NOW() END";
-=======
-                    $sets[] = "`returned_at` = NOW()";
->>>>>>> ff5e1d54e952f716ffbd022cb01df04a9049c844
                 } else {
                     $sets[] = "`returned_at` = NULL";
                 }

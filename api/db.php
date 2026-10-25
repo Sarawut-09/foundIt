@@ -65,7 +65,6 @@ try {
         $pdo->exec("ALTER TABLE `items` ADD COLUMN `returned_at` DATETIME NULL AFTER `status`");
     } catch (PDOException $ignored) {}
 
-<<<<<<< HEAD
     // InfinityFree free hosting does not provide a reliable scheduled cron job.
     // Purge expired returned posts whenever an API request reaches this database.
     // Foreign keys on claims/clues use ON DELETE CASCADE, so related rows are removed too.
@@ -75,8 +74,6 @@ try {
         error_log('FoundIt expired item cleanup failed: ' . $cleanupError->getMessage());
     }
 
-=======
->>>>>>> ff5e1d54e952f716ffbd022cb01df04a9049c844
     // สร้างบัญชี Admin เริ่มต้น (admin@foundit.example / รหัสผ่าน: Admin1234!) หากยังไม่มี
     try {
         $chkAdmin = $pdo->prepare("SELECT id FROM users WHERE email = 'admin@foundit.example'");

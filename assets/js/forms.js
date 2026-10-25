@@ -305,11 +305,7 @@
       if (await FI.confirm({ title: 'ยกเลิกการกรอกข้อมูล', icon: 'alert-triangle', tone: 'danger', confirmText: 'ยกเลิกและออก', cancelText: 'กรอกต่อ', message: 'ข้อมูลที่กรอกไว้จะไม่ถูกบันทึก ต้องการออกจากหน้านี้หรือไม่?' })) go();
     });
 
-<<<<<<< HEAD
     form.addEventListener('submit', async e => {
-=======
-    form.addEventListener('submit', e => {
->>>>>>> ff5e1d54e952f716ffbd022cb01df04a9049c844
       e.preventDefault();
       if (!validate()) { FI.toast('กรุณาตรวจสอบข้อมูลที่กรอกให้ครบถ้วน', 'error'); return; }
       const btn = $('button[type=submit]', form); FI.setBusy(btn, true);
@@ -329,24 +325,16 @@
       };
       dirty = false;
       if (mode === 'edit') {
-<<<<<<< HEAD
         const result = await FI.store.update(item.id, Object.assign(data, { status: f.status.value }));
         FI.setBusy(btn, false);
         if (!result.success) { dirty = true; FI.toast(result.message, 'error'); return; }
-=======
-        FI.store.update(item.id, Object.assign(data, { status: f.status.value }));
->>>>>>> ff5e1d54e952f716ffbd022cb01df04a9049c844
         FI.toast('บันทึกการแก้ไขเรียบร้อยแล้ว', 'success');
         setTimeout(() => { location.href = 'my-reports.html'; }, 900);
         return;
       }
-<<<<<<< HEAD
       const r = await FI.store.add(Object.assign(data, { type, status: type === 'lost' ? 'searching' : 'found' }));
       FI.setBusy(btn, false);
       if (!r.success) { dirty = true; FI.toast(r.message, 'error'); return; }
-=======
-      const r = FI.store.add(Object.assign(data, { type, status: type === 'lost' ? 'searching' : 'found' }));
->>>>>>> ff5e1d54e952f716ffbd022cb01df04a9049c844
       FI.toast('ส่งประกาศเรียบร้อยแล้ว', 'success');
       mount.innerHTML = '<div class="card success-panel"><span class="empty-icon">' + icon('check-circle-2') + '</span><h2>ส่งประกาศเรียบร้อยแล้ว</h2>' +
         '<p>เพิ่ม “' + esc(r.item.title) + '” ลงในระบบแล้ว ' + (type === 'lost' ? 'หากมีผู้พบสิ่งของที่ตรงกัน จะสามารถโทรหรือทัก LINE ติดต่อคุณได้โดยตรง' : 'ขอบคุณที่ช่วยส่งสิ่งของกลับคืนเจ้าของ เจ้าของสามารถโทรหรือทัก LINE นัดรับของกับคุณได้โดยตรง') + '</p>' +

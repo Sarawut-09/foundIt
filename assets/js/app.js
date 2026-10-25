@@ -123,7 +123,6 @@
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'btn ' + (a.cls || 'btn-outline'); b.textContent = a.label;
       if (a.id) b.id = a.id;
-<<<<<<< HEAD
       b.addEventListener('click', () => {
         const finish = r => { if (r !== false) api.close(); else b.disabled = false; };
         const fail = e => { b.disabled = false; FI.toast((e && e.message) || 'ดำเนินการไม่สำเร็จ', 'error'); };
@@ -133,9 +132,6 @@
           else finish(r);
         } catch (e) { fail(e); }
       });
-=======
-      b.addEventListener('click', () => { const r = a.onClick ? a.onClick(api) : undefined; if (r !== false) api.close(); });
->>>>>>> ff5e1d54e952f716ffbd022cb01df04a9049c844
       foot.appendChild(b);
     });
     back.addEventListener('mousedown', e => { if (e.target === back) api.close(); });

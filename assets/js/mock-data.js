@@ -69,7 +69,6 @@
     all() { return load().slice(); },
     get(id) { return load().find(i => i.id === id) || null; },
     mine() { return load().filter(i => i.mine); },
-<<<<<<< HEAD
     async add(data) {
       const res = await FI.api('items.php', {
         method: 'POST',
@@ -108,65 +107,6 @@
       }
       list.splice(i, 1); persist();
       return { success: true };
-=======
-    add(data) {
-      const list = load();
-      const max = list.reduce((m, i) => Math.max(m, parseInt(String(i.id).replace(/\D/g, ''), 10) || 0), 0);
-      const item = Object.assign({ mine: true, image: null }, data, {
-        id: 'FI-' + String(max + 1).padStart(3, '0'), postedAt: FI.todayISO()
-      });
-      list.unshift(item);
-      let ok = persist(), imageDropped = false;
-      if (!ok && item.image) { item.image = null; imageDropped = true; ok = persist(); }
-
-      // ส่งไปยัง MySQL Database ผ่าน API
-      FI.api('items.php', {
-        method: 'POST',
-        body: JSON.stringify(data)
-      }).then(res => {
-        if (res.success && res.item) {
-          const idx = list.findIndex(x => x.id === item.id);
-          if (idx >= 0) {
-            list[idx] = Object.assign(item, res.item, { mine: true });
-            persist();
-          }
-        }
-      });
-
-      return { item, persisted: ok, imageDropped };
-    },
-    update(id, patch) {
-      const it = load().find(i => i.id === id);
-      if (!it) return null;
-      Object.assign(it, patch);
-      let ok = persist(), imageDropped = false;
-      if (!ok && patch.image) { it.image = null; imageDropped = true; ok = persist(); }
-
-      // ส่งอัปเดตไปยัง MySQL Database
-      FI.api('items.php?action=update&id=' + encodeURIComponent(id), {
-        method: 'POST',
-        body: JSON.stringify(patch)
-      }).then(res => {
-        if (res.success && res.item) {
-          Object.assign(it, res.item, { mine: true });
-          persist();
-        }
-      });
-
-      return { item: it, persisted: ok, imageDropped };
-    },
-    remove(id) {
-      const list = load(); const i = list.findIndex(x => x.id === id);
-      if (i < 0) return false;
-      list.splice(i, 1); persist();
-
-      // ลบจาก MySQL Database
-      FI.api('items.php?action=delete&id=' + encodeURIComponent(id), {
-        method: 'POST'
-      });
-
-      return true;
->>>>>>> ff5e1d54e952f716ffbd022cb01df04a9049c844
     },
     async sync() {
       try {

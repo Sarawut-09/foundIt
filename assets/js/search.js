@@ -277,11 +277,7 @@
           contactHtml;
       })() +
       (it.status === 'returned'
-<<<<<<< HEAD
         ? '<div class="notice notice-warning" style="margin-top:16px">' + icon('clock') + '<div><strong>ประกาศนี้ส่งคืนเรียบร้อยแล้ว:</strong> ระบบจะลบโพสต์นี้ออกจากฐานข้อมูลโดยอัตโนมัติเมื่อครบ 3 วัน</div></div>'
-=======
-        ? '<div class="notice notice-warning" style="margin-top:16px">' + icon('clock') + '<div><strong>ประกาศนี้ส่งคืนเรียบร้อยแล้ว:</strong> ระบบจะลบโพสต์นี้ออกจากหน้าเว็บโดยอัตโนมัติเมื่อครบ 30 วัน เพื่อความสะอาดของหน้าเว็บและลดภาระผู้ดูแลระบบ</div></div>'
->>>>>>> ff5e1d54e952f716ffbd022cb01df04a9049c844
         : '') +
       '<div class="notice notice-info">' + icon('shield-check') + '<div><strong>คำแนะนำความปลอดภัย:</strong> ติดต่อผู้โพสต์โดยตรงเพื่อนัดหมายส่งมอบสิ่งของ แนะนำให้นัดพบในสถานที่สาธารณะที่มีผู้คนสัญจร เช่น โรงอาหาร หรือใต้อาคารเรียน และตรวจสอบสิ่งของร่วมกันก่อนส่งมอบ</div></div>' +
       '<div class="detail-actions" id="detailActions">' +
@@ -299,12 +295,8 @@
       adminDeleteBtn.addEventListener('click', async () => {
         const ok = await FI.confirm({ title: 'ลบประกาศโดยแอดมิน', icon: 'trash-2', tone: 'danger', confirmText: 'ลบประกาศ', message: 'ต้องการลบประกาศ <strong>' + esc(it.title) + '</strong> (รหัส ' + esc(it.id) + ') ใช่หรือไม่?' });
         if (ok) {
-<<<<<<< HEAD
           const result = await FI.store.remove(it.id);
           if (!result.success) { FI.toast(result.message, 'error'); return; }
-=======
-          FI.store.remove(it.id);
->>>>>>> ff5e1d54e952f716ffbd022cb01df04a9049c844
           FI.toast('แอดมินลบประกาศ “' + it.title + '” แล้ว', 'success');
           setTimeout(() => { location.href = 'search.html'; }, 800);
         }
@@ -319,18 +311,11 @@
           body: '<p style="margin-bottom:12px">เลือกสถานะใหม่ของ <strong style="color:var(--text)">' + esc(it.title) + '</strong></p><div class="radio-list">' +
             choices.map(s => '<label class="radio-item"><input type="radio" name="adminNewStatus" value="' + s + '"' + (it.status === s ? ' checked' : '') + '>' + FI.statusBadge(s) + '</label>').join('') + '</div>',
           actions: [{ label: 'ยกเลิก', cls: 'btn-outline' }, {
-<<<<<<< HEAD
             label: 'บันทึก', cls: 'btn-primary', onClick: async () => {
               const checked = document.querySelector('input[name=adminNewStatus]:checked');
               if (!checked || checked.value === it.status) return;
               const result = await FI.store.update(it.id, { status: checked.value });
               if (!result.success) { FI.toast(result.message, 'error'); return false; }
-=======
-            label: 'บันทึก', cls: 'btn-primary', onClick: () => {
-              const checked = document.querySelector('input[name=adminNewStatus]:checked');
-              if (!checked || checked.value === it.status) return;
-              FI.store.update(it.id, { status: checked.value });
->>>>>>> ff5e1d54e952f716ffbd022cb01df04a9049c844
               FI.toast('แอดมินเปลี่ยนสถานะเป็น “' + FI.STATUS[checked.value].label + '” แล้ว', 'success');
               setTimeout(() => { location.reload(); }, 600);
             }

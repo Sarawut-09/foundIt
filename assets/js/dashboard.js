@@ -145,15 +145,11 @@
       const id = btn.closest('tr').dataset.id, it = FI.store.get(id); if (!it) return;
       if (btn.dataset.act === 'delete') {
         const ok = await FI.confirm({ title: 'ลบประกาศ', icon: 'trash-2', tone: 'danger', confirmText: 'ลบประกาศ', message: 'ต้องการลบประกาศ <strong>' + esc(it.title) + '</strong> ใช่หรือไม่? การลบไม่สามารถย้อนกลับได้' });
-<<<<<<< HEAD
         if (ok) {
           const result = await FI.store.remove(id);
           if (!result.success) { FI.toast(result.message, 'error'); return; }
           render(); FI.toast('ลบประกาศ “' + it.title + '” แล้ว', 'success');
         }
-=======
-        if (ok) { FI.store.remove(id); render(); FI.toast('ลบประกาศ “' + it.title + '” แล้ว', 'success'); }
->>>>>>> ff5e1d54e952f716ffbd022cb01df04a9049c844
       } else if (btn.dataset.act === 'claims') {
         const cList = claimsByItem[id] || [];
         FI.modal({
@@ -182,19 +178,12 @@
           body: '<p style="margin-bottom:12px">เลือกสถานะใหม่ของ <strong style="color:var(--text)">' + esc(it.title) + '</strong></p><div class="radio-list">' +
             choices.map(s => '<label class="radio-item"><input type="radio" name="newStatus" value="' + s + '"' + (it.status === s ? ' checked' : '') + '>' + FI.statusBadge(s) + '</label>').join('') + '</div>',
           actions: [{ label: 'ยกเลิก', cls: 'btn-outline' }, {
-<<<<<<< HEAD
             label: 'บันทึก', cls: 'btn-primary', onClick: async () => {
               const v = document.querySelector('input[name=newStatus]:checked').value;
               if (v === it.status) return;
               const result = await FI.store.update(id, { status: v });
               if (!result.success) { FI.toast(result.message, 'error'); return false; }
               render();
-=======
-            label: 'บันทึก', cls: 'btn-primary', onClick: () => {
-              const v = document.querySelector('input[name=newStatus]:checked').value;
-              if (v === it.status) return;
-              FI.store.update(id, { status: v }); render();
->>>>>>> ff5e1d54e952f716ffbd022cb01df04a9049c844
               FI.toast('เปลี่ยนสถานะเป็น “' + FI.STATUS[v].label + '” แล้ว', 'success');
             }
           }]
